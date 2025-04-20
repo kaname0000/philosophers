@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "random": "c",
+        "stdio.h": "c",
+        "philosophers.h": "c",
+        "utils.h": "c"
+    }
+}
