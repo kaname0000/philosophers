@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 20:26:49 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/20 20:13:11 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/24 22:50:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,11 @@ void				free_list(t_philo *list);
 t_philo				*make_list(t_data data);
 int					set_routine(t_philo *philo);
 long				get_time_in_ms(void);
-void				write_time_fork(int num, long start_time,
-						pthread_mutex_t *write);
-void				write_time_eat(int num, long start_time,
-						pthread_mutex_t *write, long *last_meal_time);
-void				write_time_sleep(int num, long start_time,
-						pthread_mutex_t *write);
-void				write_time_think(int num, long start_time,
-						pthread_mutex_t *write);
-void				write_time_died(int num, long start_time,
-						pthread_mutex_t *write);
+void				write_time_fork(t_philo *arg);
+void				write_time_eat(t_philo *arg);
+void				write_time_sleep(t_philo *arg);
+void				write_time_think(t_philo *arg);
+void				write_time_died(t_philo *arg);
 int					check_death(t_philo *philo);
 
 #endif

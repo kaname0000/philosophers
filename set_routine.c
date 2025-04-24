@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_routine.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:47:08 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/20 21:59:06 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/24 22:51:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,30 @@ static void	pick_forks(t_philo *arg)
 	if (arg->philo_num % 2 == 1)
 	{
 		pthread_mutex_lock(arg->right_fork);
-		write_time_fork(arg->philo_num, arg->start_time, arg->write);
+		if (*(arg->death_flag) || check_death(arg))
+			return ;
+		write_time_fork(arg);
 		pthread_mutex_lock(arg->left_fork);
-		write_time_fork(arg->philo_num, arg->start_time, arg->write);
+		if (*(arg->death_flag) || check_death(arg))
+			return ;
+		write_time_fork(arg);
 	}
 	else if (arg->philo_num % 2 == 0)
 	{
 		pthread_mutex_lock(arg->left_fork);
-		write_time_fork(arg->philo_num, arg->start_time, arg->write);
+		if (*(arg->death_flag) || check_death(arg))
+			return ;
+		write_time_fork(arg);
 		pthread_mutex_lock(arg->right_fork);
-		write_time_fork(arg->philo_num, arg->start_time, arg->write);
+		if (*(arg->death_flag) || check_death(arg))
+			return ;
+		write_time_fork(arg);
 	}
 }
 
 static void	eat(t_philo *arg)
 {
-	write_time_eat(arg->philo_num, arg->start_time, arg->write,
-		&arg->last_meal_time);
+	write_time_eat(arg);
 	usleep(arg->data.eat * 1000);
 	pthread_mutex_unlock(arg->right_fork);
 	pthread_mutex_unlock(arg->left_fork);
@@ -54,11 +61,11 @@ static void	*routine(void *philo)
 		eat(arg);
 		if (*(arg->death_flag) || check_death(arg))
 			break ;
-		write_time_sleep(arg->philo_num, arg->start_time, arg->write);
+		write_time_sleep(arg);
 		usleep(arg->data.sleep * 1000);
 		if (*(arg->death_flag) || check_death(arg))
 			break ;
-		write_time_think(arg->philo_num, arg->start_time, arg->write);
+		write_time_think(arg);
 	}
 	*(arg->death_flag) = 1;
 	return (NULL);

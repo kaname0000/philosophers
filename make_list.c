@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:09:26 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/20 20:11:54 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/24 22:53:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,17 @@ static void	free_list2(t_philo *list, int qty)
 	int		i;
 	t_philo	*tmp;
 
-	i = 1;
-	if (list->right == NULL)
+	if (!list)
+		return;
+	i = 0;
+	while (i < qty)
 	{
-		pthread_mutex_destroy(list->right_fork);
-		free(list->right_fork);
-		free(list);
-	}
-	else
-	{
-		while (i < qty)
-		{
-			tmp = list;
-			list = list->right;
-			pthread_mutex_destroy(list->right_fork);
-			free(list->right_fork);
-			free(list);
-		}
-		free(list);
+		tmp = list;
+		list = list->right;
+		pthread_mutex_destroy(tmp->right_fork);
+		free(tmp->right_fork);
+		free(tmp);
+		i++;
 	}
 }
 

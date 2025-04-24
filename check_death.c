@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_death.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 20:04:45 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/20 20:50:13 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/24 22:54:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 int	check_death(t_philo *philo)
 {
 	if (philo->data.die < (get_time_in_ms() - philo->last_meal_time))
-		return (write_time_died(philo->philo_num, philo->start_time,
-				philo->write), 1);
+		return (write_time_died(philo), 1);
 	else
 		return (0);
 }
