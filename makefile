@@ -6,7 +6,7 @@
 #    By: okaname <okaname@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/26 20:36:55 by okaname           #+#    #+#              #
-#    Updated: 2025/04/20 22:20:41 by okaname          ###   ########.fr        #
+#    Updated: 2025/04/26 03:43:00 by okaname          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ SRCS =  print_error.c\
 		get_time.c\
 		write_time.c\
 		check_death.c\
+		check_all_full.c\
+		free_list.c\
 		utils/isdigit.c\
 		utils/putstr_fd.c\
 		utils/putnbr.c\

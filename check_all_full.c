@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_list.c                                        :+:      :+:    :+:   */
+/*   check_all_full.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/28 16:56:47 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/26 03:59:37 by okaname          ###   ########.fr       */
+/*   Created: 2025/04/26 03:28:41 by okaname           #+#    #+#             */
+/*   Updated: 2025/04/26 03:34:48 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	free_list(t_philo *list)
+int	check_all_full(t_philo *philo)
 {
-	t_philo	*current;
 	t_philo	*tmp;
+	int		i;
 
-	if (!list)
-		return ;
-	current = list;
-	tmp = current->right;
-	pthread_mutex_destroy(current->write);
-	free(current->write);
-	free(current->death_flag);
-	while (tmp != list)
+	tmp = philo;
+	i = 0;
+	while (i < tmp->data.number)
 	{
-		pthread_mutex_destroy(current->right_fork);
-		free(current->right_fork);
-		free(current);
-		current = tmp;
-		tmp = current->right;
+		if (tmp->eat_count < tmp->data.must_eat)
+			return (0);
+		tmp = tmp->right;
+		i++;
 	}
-	pthread_mutex_destroy(current->right_fork);
-	free(current->right_fork);
-	free(current);
+	*(philo->death_flag) = 1;
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 20:26:26 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/20 17:47:18 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/26 03:54:45 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ int	main(int argc, char *argv[])
 		ft_putstr_fd("Error\n", 2);
 	set_routine(head);
 	wait_routine(head);
+	free_list(head);
 	return (0);
 }

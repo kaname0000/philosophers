@@ -6,7 +6,7 @@
 /*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:47:08 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/25 23:22:30 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/26 03:35:59 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ static int	eat(t_philo *arg)
 	pthread_mutex_unlock(arg->right_fork);
 	pthread_mutex_unlock(arg->left_fork);
 	if (write_time_eat(arg))
+		return (1);
+	arg->eat_count++;
+	if (check_all_full(arg))
 		return (1);
 	usleep(arg->data.eat * 1000);
 	return (0);

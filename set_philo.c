@@ -6,7 +6,7 @@
 /*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 20:42:50 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/20 15:31:48 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/26 03:11:48 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	make_data(t_data *data, int argc, char **argv)
 	data->die = atoi_with_error(argv[2], data);
 	data->eat = atoi_with_error(argv[3], data);
 	data->sleep = atoi_with_error(argv[4], data);
+	data->must_eat = -1;
 	if (argc == 6)
 		data->must_eat = atoi_with_error(argv[5], data);
 }

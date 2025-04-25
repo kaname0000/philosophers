@@ -6,7 +6,7 @@
 /*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 20:26:49 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/25 23:14:01 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/26 03:43:19 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_philo
 	long			start_time;
 	long			last_meal_time;
 	int				*death_flag;
+	int				eat_count;
 	struct s_philo	*right;
 	struct s_philo	*left;
 }					t_philo;
@@ -62,5 +63,6 @@ int					write_time_sleep(t_philo *arg);
 int					write_time_think(t_philo *arg);
 void				write_time_died(t_philo *arg);
 int					check_death(t_philo *philo);
+int					check_all_full(t_philo *philo);
 
 #endif

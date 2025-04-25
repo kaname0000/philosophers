@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:09:26 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/24 22:53:35 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/26 03:35:01 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ static t_philo	*make_node(t_data data, int philo_num)
 	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (philo == NULL)
 		return (NULL);
-	philo->philo_num = philo_num + 1;
-	philo->data = data;
 	philo->right_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	if (philo->right_fork == NULL)
 		return (free(philo), NULL);
 	pthread_mutex_init(philo->right_fork, NULL);
+	philo->philo_num = philo_num + 1;
+	philo->data = data;
+	philo->eat_count = 0;
 	philo->left_fork = NULL;
 	philo->right = NULL;
 	philo->left = NULL;
@@ -37,7 +38,7 @@ static void	free_list2(t_philo *list, int qty)
 	t_philo	*tmp;
 
 	if (!list)
-		return;
+		return ;
 	i = 0;
 	while (i < qty)
 	{
