@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 20:26:49 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/24 22:50:39 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/25 23:14:01 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void				free_list(t_philo *list);
 t_philo				*make_list(t_data data);
 int					set_routine(t_philo *philo);
 long				get_time_in_ms(void);
-void				write_time_fork(t_philo *arg);
-void				write_time_eat(t_philo *arg);
-void				write_time_sleep(t_philo *arg);
-void				write_time_think(t_philo *arg);
+int					write_time_fork(t_philo *arg);
+int					write_time_eat(t_philo *arg);
+int					write_time_sleep(t_philo *arg);
+int					write_time_think(t_philo *arg);
 void				write_time_died(t_philo *arg);
 int					check_death(t_philo *philo);
 

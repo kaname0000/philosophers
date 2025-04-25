@@ -3,47 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   set_routine.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:47:08 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/24 22:51:15 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/25 23:22:30 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	pick_forks(t_philo *arg)
+static int	pick_forks(t_philo *arg)
 {
 	if (arg->philo_num % 2 == 1)
 	{
 		pthread_mutex_lock(arg->right_fork);
-		if (*(arg->death_flag) || check_death(arg))
-			return ;
-		write_time_fork(arg);
+		if (write_time_fork(arg))
+			return (pthread_mutex_unlock(arg->right_fork), 1);
 		pthread_mutex_lock(arg->left_fork);
-		if (*(arg->death_flag) || check_death(arg))
-			return ;
-		write_time_fork(arg);
+		if (write_time_fork(arg))
+			return (pthread_mutex_unlock(arg->left_fork), 1);
 	}
 	else if (arg->philo_num % 2 == 0)
 	{
 		pthread_mutex_lock(arg->left_fork);
-		if (*(arg->death_flag) || check_death(arg))
-			return ;
-		write_time_fork(arg);
+		if (write_time_fork(arg))
+			return (pthread_mutex_unlock(arg->left_fork), 1);
 		pthread_mutex_lock(arg->right_fork);
-		if (*(arg->death_flag) || check_death(arg))
-			return ;
-		write_time_fork(arg);
+		if (write_time_fork(arg))
+			return (pthread_mutex_unlock(arg->right_fork), 1);
 	}
+	return (0);
 }
 
-static void	eat(t_philo *arg)
+static int	eat(t_philo *arg)
 {
-	write_time_eat(arg);
-	usleep(arg->data.eat * 1000);
 	pthread_mutex_unlock(arg->right_fork);
 	pthread_mutex_unlock(arg->left_fork);
+	if (write_time_eat(arg))
+		return (1);
+	usleep(arg->data.eat * 1000);
+	return (0);
 }
 
 static void	*routine(void *philo)
@@ -53,21 +52,16 @@ static void	*routine(void *philo)
 	arg = (t_philo *)philo;
 	while (1)
 	{
-		if (*(arg->death_flag) || check_death(arg))
+		if (pick_forks(arg))
 			break ;
-		pick_forks(arg);
-		if (*(arg->death_flag) || check_death(arg))
+		if (eat(arg))
 			break ;
-		eat(arg);
-		if (*(arg->death_flag) || check_death(arg))
+		if (write_time_sleep(arg))
 			break ;
-		write_time_sleep(arg);
 		usleep(arg->data.sleep * 1000);
-		if (*(arg->death_flag) || check_death(arg))
+		if (write_time_think(arg))
 			break ;
-		write_time_think(arg);
 	}
-	*(arg->death_flag) = 1;
 	return (NULL);
 }
 
