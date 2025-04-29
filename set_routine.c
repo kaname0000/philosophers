@@ -6,7 +6,7 @@
 /*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:47:08 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/26 03:35:59 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/29 21:14:33 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,44 @@
 
 static int	pick_forks(t_philo *arg)
 {
-	if (arg->philo_num % 2 == 1)
+	if (arg->data.number == 1)
 	{
 		pthread_mutex_lock(arg->right_fork);
-		if (write_time_fork(arg))
+		write_time_fork(arg);
+		usleep(arg->data.die * 1000);
+		write_time_died(arg);
+		pthread_mutex_unlock(arg->right_fork);
+		return (1);
+	}
+	if (arg->philo_num % 2 == 1)
+	{
+		if (pick_right_fork(arg))
+			return (1);
+		if (pick_left_fork(arg))
 			return (pthread_mutex_unlock(arg->right_fork), 1);
-		pthread_mutex_lock(arg->left_fork);
-		if (write_time_fork(arg))
-			return (pthread_mutex_unlock(arg->left_fork), 1);
 	}
 	else if (arg->philo_num % 2 == 0)
 	{
-		pthread_mutex_lock(arg->left_fork);
-		if (write_time_fork(arg))
+		if (pick_left_fork(arg))
+			return (1);
+		if (pick_right_fork(arg))
 			return (pthread_mutex_unlock(arg->left_fork), 1);
-		pthread_mutex_lock(arg->right_fork);
-		if (write_time_fork(arg))
-			return (pthread_mutex_unlock(arg->right_fork), 1);
 	}
 	return (0);
 }
 
 static int	eat(t_philo *arg)
 {
-	pthread_mutex_unlock(arg->right_fork);
-	pthread_mutex_unlock(arg->left_fork);
 	if (write_time_eat(arg))
-		return (1);
+		return (pthread_mutex_unlock(arg->left_fork),
+			pthread_mutex_unlock(arg->right_fork), 1);
 	arg->eat_count++;
 	if (check_all_full(arg))
-		return (1);
+		return (pthread_mutex_unlock(arg->left_fork),
+			pthread_mutex_unlock(arg->right_fork), 1);
 	usleep(arg->data.eat * 1000);
+	pthread_mutex_unlock(arg->left_fork);
+	pthread_mutex_unlock(arg->right_fork);
 	return (0);
 }
 
@@ -53,6 +60,8 @@ static void	*routine(void *philo)
 	t_philo	*arg;
 
 	arg = (t_philo *)philo;
+	if (check_all_full(arg))
+		return (NULL);
 	while (1)
 	{
 		if (pick_forks(arg))
@@ -64,6 +73,7 @@ static void	*routine(void *philo)
 		usleep(arg->data.sleep * 1000);
 		if (write_time_think(arg))
 			break ;
+		usleep(300);
 	}
 	return (NULL);
 }

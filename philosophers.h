@@ -6,7 +6,7 @@
 /*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 20:26:49 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/26 03:43:19 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/29 21:11:31 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ int					write_time_think(t_philo *arg);
 void				write_time_died(t_philo *arg);
 int					check_death(t_philo *philo);
 int					check_all_full(t_philo *philo);
+int					pick_right_fork(t_philo *philo);
+int					pick_left_fork(t_philo *philo);
 
 #endif

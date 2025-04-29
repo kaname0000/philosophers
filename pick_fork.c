@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   pick_fork.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 15:14:34 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/20 16:51:28 by okaname          ###   ########.fr       */
+/*   Created: 2025/04/29 21:09:19 by okaname           #+#    #+#             */
+/*   Updated: 2025/04/29 21:12:56 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include <unistd.h>
+#include "philosophers.h"
 
-long	get_time_in_ms(void)
+int	pick_right_fork(t_philo *philo)
 {
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000));
+	pthread_mutex_lock(philo->right_fork);
+	if (write_time_fork(philo))
+		return (pthread_mutex_unlock(philo->right_fork), 1);
+	else
+		return (0);
 }
 
-int	main(void)
+int	pick_left_fork(t_philo *philo)
 {
-	long	start;
-	long	end;
-
-	start = get_time_in_ms();
-	usleep(500000);
-	end = get_time_in_ms();
-	printf("経過時間: %ldms\n", end - start);
-	return (0);
+	pthread_mutex_lock(philo->left_fork);
+	if (write_time_fork(philo))
+		return (pthread_mutex_unlock(philo->left_fork), 1);
+	else
+		return (0);
 }

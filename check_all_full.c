@@ -6,7 +6,7 @@
 /*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 03:28:41 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/26 03:34:48 by okaname          ###   ########.fr       */
+/*   Updated: 2025/04/26 10:30:19 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	check_all_full(t_philo *philo)
 
 	tmp = philo;
 	i = 0;
+	if (philo->data.must_eat == -1)
+		return (0);
 	while (i < tmp->data.number)
 	{
 		if (tmp->eat_count < tmp->data.must_eat)
