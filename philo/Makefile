@@ -1,20 +1,19 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: okaname <okaname@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/26 20:36:55 by okaname           #+#    #+#              #
-#    Updated: 2025/04/29 21:14:49 by okaname          ###   ########.fr        #
+#    Updated: 2025/05/01 16:20:17 by okaname          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I./includes -pthread -g
 
-MANDATORY = philosophers
-BONUS = bonus
+MANDATORY = philo
 
 SRCS =  print_error.c\
 		set_philo.c\
@@ -27,6 +26,7 @@ SRCS =  print_error.c\
 		check_all_full.c\
 		free_list.c\
 		pick_fork.c\
+		only_philo.c\
 		utils/isdigit.c\
 		utils/putstr_fd.c\
 		utils/putnbr.c\
@@ -38,11 +38,6 @@ all: $(MANDATORY)
 
 $(MANDATORY): $(OBJS) 
 	$(CC) $(CFLAGS) $(OBJS) -o $@
-
-$(BONUS): $(OBJS) main_bonus.c
-	$(CC) $(CFLAGS) main_bonus.c $(OBJS) -o $@
-
-bonus: $(BONUS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

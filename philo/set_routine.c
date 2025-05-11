@@ -6,7 +6,7 @@
 /*   By: okaname <okaname@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:47:08 by okaname           #+#    #+#             */
-/*   Updated: 2025/04/29 21:14:33 by okaname          ###   ########.fr       */
+/*   Updated: 2025/05/01 16:19:57 by okaname          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 static int	pick_forks(t_philo *arg)
 {
 	if (arg->data.number == 1)
+		return (only_philo(arg));
+	if (arg->data.die < arg->data.eat && arg->philo_num == 2)
 	{
-		pthread_mutex_lock(arg->right_fork);
-		write_time_fork(arg);
 		usleep(arg->data.die * 1000);
 		write_time_died(arg);
-		pthread_mutex_unlock(arg->right_fork);
 		return (1);
 	}
 	if (arg->philo_num % 2 == 1)
